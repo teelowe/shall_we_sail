@@ -1,0 +1,7 @@
+NOAATidesBaseURL: https://api.tidesandcurrents.noaa.gov/api/prod/datagetter
+NOAAWeatherBaseURL: https://api.weather.gov
+MarshallGeoLocation: 38.16213,-122.89357
+Station: MTR
+MarshallGridPoints: 72,126
+
+

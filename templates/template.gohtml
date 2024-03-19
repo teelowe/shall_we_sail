@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<body>
+<h1>7 Day Forecast</h1>
+<table>
+<tr>
+  <th>number</th>
+  <th>name</th>
+  <th>start time</th>
+  <th>end time</th>
+  <th>temperature</th>
+  <th>temperature trend</th>
+  <th>wind speed</th>
+  <th>wind direction</th>
+  <th>short forecast</th>
+  <th>detailed forecast</th>
+  </tr>
+{{ range .Properties.Periods }}
+<tr>
+  <td>{{ .Number }}</td>
+  <td>{{ .Name }}</td>
+  <td>{{ .StartTime }}</td>
+  <td>{{ .EndTime }}</td>
+  <td>{{ .Temperature }}</td>
+  <td>{{ .TemperatureTrend }}</td>
+  <td>{{ .WindSpeed }}</td>
+  <td>{{ .WindDirection }}</td>
+  <td>{{ .ShortForecast }}</td>
+  <td>{{ .DetailedForecast }}</td>
+</tr>
+{{ end }}
+</table>
+</body>
+</html>
