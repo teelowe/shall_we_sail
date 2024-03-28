@@ -37,7 +37,7 @@ func FormatTidesDate(s string) string {
 	if err != nil {
 		log.Fatal("Date format error")
 	}
-	return t.Format("Jan 2, 15:04")
+	return t.Format("Jan 2, 15:04 PM")
 }
 
 type Tides struct {
