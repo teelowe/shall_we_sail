@@ -1,34 +1,64 @@
 <!doctype html>
 <html>
-<body>
-<h1>7 Day Forecast</h1>
-<table>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-gray-100">
+<div class="pl-8 pr-8 pt-8 pb-4">
+<h1 class="text-lg font-semibold">Tomales Bay - 7 Day Forecast - 6AM to 6PM</h1>
+<table class="text-sm border-separate table-auto">
 <tr>
-  <th>number</th>
-  <th>name</th>
-  <th>start time</th>
-  <th>end time</th>
-  <th>temperature</th>
-  <th>temperature trend</th>
-  <th>wind speed</th>
-  <th>wind direction</th>
-  <th>short forecast</th>
-  <th>detailed forecast</th>
-  </tr>
-{{ range .Properties.Periods }}
-<tr>
-  <td>{{ .Number }}</td>
-  <td>{{ .Name }}</td>
-  <td>{{ .StartTime }}</td>
-  <td>{{ .EndTime }}</td>
-  <td>{{ .Temperature }}</td>
-  <td>{{ .TemperatureTrend }}</td>
-  <td>{{ .WindSpeed }}</td>
-  <td>{{ .WindDirection }}</td>
-  <td>{{ .ShortForecast }}</td>
-  <td>{{ .DetailedForecast }}</td>
+  <th class="border border-slate-300">Day</th>
+  <th class="border border-slate-300">Date</th>
+  <th class="border border-slate-300">temp</th>
+  <th class="whitespace-nowrap border border-slate-300">wind speed</th>
+  <th class="whitespace-nowrap border border-slate-300">wind direction</th>
+  <th class="border border-slate-300">short forecast</th>
+  <th class="border border-slate-300">detailed forecast</th>
 </tr>
+{{ range .Forecasts }}
+  {{ if .Forecast }}
+    {{ $forecast := .Forecast }}
+    {{ range $forecast.Properties.Periods }}
+      {{ if .IsDaytime }}
+        <tr class="border">
+          <td class="border border-slate-300">{{ .Name }}</td>
+          <td class="whitespace-nowrap border border-slate-300">{{FormatDate .StartTime }}</td>
+          <td class="border border-slate-300">{{ .Temperature }}</td>
+          <td class="whitespace-nowrap border border-slate-300">{{ .WindSpeed }}</td>
+          <td class="border border-slate-300">{{ .WindDirection }}</td>
+          <td class="border border-slate-300">{{ .ShortForecast }}</td>
+          <td class="border border-slate-300">{{ .DetailedForecast }}</td>
+        </tr>
+      {{ end }}
+    {{ end }}
+  {{ end }}
 {{ end }}
 </table>
+</div>
+
+<div class="pl-8 pr-8 pt-8 pb-4">
+<h1 class="text-lg font-semibold">Tides for this period...</h1>
+<table class="text-sm border-separate table-auto">
+<tr>
+  <th class="border border-slate-300">time</th>
+  <th class="border border-slate-300">value</th>
+  <th class="border border-slate-300">High or Low</th>
+</tr>
+{{ range .Forecasts }}
+  {{ if .Tides }}
+    {{ $tides := .Tides }}
+    {{ range $tides.Predictions }}
+    <tr>
+      <td class="border border-slate-300">{{ FormatTidesDate .Time }}</td>
+      <td class="border border-slate-300">{{ .Value }}</td>
+      <td class="border border-slate-300">{{ .HiLo }}</td>
+    </tr>
+    {{ end }}
+  {{ end }}
+{{end}}
+
 </body>
 </html>

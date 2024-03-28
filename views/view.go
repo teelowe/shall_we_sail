@@ -8,16 +8,22 @@ import (
 	"github.com/teelowe/shall_we_sail/models"
 )
 
-func RenderForecast(w http.ResponseWriter, data models.Forecast) {
-	tmpl, err := template.ParseFiles("templates/template.gohtml")
+func RenderForecast(w http.ResponseWriter, forecast models.UnifiedWeatherAndTides) {
+	tmpl, err := template.New("template.gohtml").Funcs(template.FuncMap{
+		"FormatDate":      models.FormatDate,
+		"FormatTidesDate": models.FormatTidesDate}).ParseFiles("templates/template.gohtml")
 	if err != nil {
-		http.Error(w, "Parse error", http.StatusInternalServerError)
+		fmt.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, "Parse error: %v", http.StatusInternalServerError)
 		return
 	}
 
-	err = tmpl.Execute(w, data)
+	err = tmpl.Execute(w, forecast)
 	if err != nil {
 		fmt.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, "Execute error: %v", http.StatusInternalServerError)
 		return
 	}
 }
