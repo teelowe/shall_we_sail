@@ -10,8 +10,8 @@ import (
 
 func RenderForecast(w http.ResponseWriter, forecast models.UnifiedWeatherAndTides) {
 	tmpl, err := template.New("template.gohtml").Funcs(template.FuncMap{
-		"FormatDate":      models.FormatDate,
-		"FormatTidesDate": models.FormatTidesDate}).ParseFiles("templates/template.gohtml")
+		"FormatForecastDate": models.FormatForecastDate,
+		"FormatTidesDate":    models.FormatTidesDate}).ParseFiles("templates/template.gohtml")
 	if err != nil {
 		fmt.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)

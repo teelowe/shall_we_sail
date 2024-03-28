@@ -28,7 +28,7 @@ type Period struct {
 	DetailedForecast string    `json:"detailedForecast"`
 }
 
-func FormatDate(t time.Time) string {
+func FormatForecastDate(t time.Time) string {
 	return t.Format("Jan 2")
 }
 
